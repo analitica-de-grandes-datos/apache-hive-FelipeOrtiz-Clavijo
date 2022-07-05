@@ -45,3 +45,11 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+-- query and store results in local output directory
+INSERT OVERWRITE LOCAL DIRECTORY '/home/vagrant/output' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+SELECT year, t0, count(t0)
+FROM (SELECT YEAR(c4) as year, t0 FROM tbl0
+        LATERAL VIEW explode(c5) c5 as t0)
+GROUP BY year, t0;
