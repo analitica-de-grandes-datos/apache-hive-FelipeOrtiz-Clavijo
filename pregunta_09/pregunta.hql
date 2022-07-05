@@ -46,3 +46,11 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+INSERT OVERWRITE LOCAL DIRECTORY '/home/vagrant/output' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+SELECT t0.c1, t0.c2, t1.val
+FROM tbl0 t0 JOIN
+(SELECT c1, key as c4, val FROM tbl1
+    LATERAL VIEW explode(c4) c4 as key,val) t1
+ON (t0.c1 = t1.c1 AND t0.c2 = t1.c4);

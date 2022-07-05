@@ -33,3 +33,10 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+INSERT OVERWRITE LOCAL DIRECTORY '/home/vagrant/output' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+SELECT item, key, count(*) FROM t0
+     LATERAL VIEW explode(c2) as item
+     LATERAL VIEW explode(c3) as key,val
+GROUP BY item, key;

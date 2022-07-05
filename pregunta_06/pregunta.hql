@@ -46,3 +46,8 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+-- query and store results in local output directory
+INSERT OVERWRITE LOCAL DIRECTORY '/home/vagrant/output' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+select upper(concat_ws(':', c5)) as c5 from tbl0;
