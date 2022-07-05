@@ -47,3 +47,9 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+INSERT OVERWRITE LOCAL DIRECTORY '/home/vagrant/output' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+SELECT c2, SUM(value) FROM tbl0
+LATERAL VIEW explode(c6) c6 as key, value
+GROUP BY c2;
